@@ -151,35 +151,3 @@ const RoundTd = styled.td`
   border-right: 2px solid white;
   color: white;
 `;
-// const ReUl = styled.ul`
-//   list-style: none;
-//   line-height: 60px;
-//   padding: 0;
-// `;
-
-// const NonP = styled.p`
-//   width: 28.5rem;
-
-//   text-align: center;
-//   color: white;
-// `;
-
-// const NumberDiv = styled.div`
-//   display: inline-block;
-//   margin: 1rem 0.5rem 0 0.5rem;
-//   font-size: 1.5rem;
-//   border-radius: 50%;
-//   width: 60px;
-//   height: 60px;
-//   text-align: center;
-//   color: white;
-//   text-shadow: 0px 0px 3px rgba(0, 49, 70, 0.8);
-// `;
-
-// const GradeDiv = styled.span`
-//   width: 20%;
-//   font-size: 1.5rem;
-//   text-align: center;
-//   margin-top: 1rem;
-//   border-left: 2px solid white;
-// `;

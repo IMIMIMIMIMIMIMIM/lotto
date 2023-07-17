@@ -49,7 +49,7 @@ const App = () => {
             onNumbersChange={handleNumbersChange}
           />
         </div>
-        <Input />
+        <Input rounds={round} numbersList={numbersList} />
         <Data lottoNumbers={lottoNumbers} />
       </ConDiv>
       <Result
