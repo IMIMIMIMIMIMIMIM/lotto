@@ -73,11 +73,11 @@ const Number = ({ timerFinished, onNumbersChange }) => {
 
   return (
     <LoDiv>
-      {lottoNumbers.slice(0, 6).map((number, index) => (
+      {lottoNumbers.slice(0, 6).map((number, i) => (
         <NumDiv
-          key={index}
+          key={i}
           bgColor={getBackgroundColor(number)}
-          show={index <= currentNumber}
+          show={i <= currentNumber}
         >
           {number}
         </NumDiv>

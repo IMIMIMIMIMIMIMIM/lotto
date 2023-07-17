@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Round = ({ onRoundChange, onTimerFinish }) => {
   const [round, setRound] = useState(1);
   const [min, setMin] = useState(0);
-  const [sec, setSec] = useState(1);
+  const [sec, setSec] = useState(10);
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -13,7 +13,7 @@ const Round = ({ onRoundChange, onTimerFinish }) => {
         clearInterval(countdown);
         setRound((prevRound) => prevRound + 1);
         onRoundChange(round + 1);
-        setSec(1);
+        setSec(10);
       } else if (parseInt(sec) > 0) {
         setSec((prevSec) => prevSec - 1);
       } else if (parseInt(sec) === 0) {

@@ -56,20 +56,17 @@ const Result = ({ rounds, numbersList }) => {
       <Table>
         <thead>
           <tr>
-            <th>회차</th>
+            <RoundTh>회차</RoundTh>
             <th>번호</th>
           </tr>
         </thead>
         <tbody>
           {numbersList.map((numbers, index) => (
             <tr key={index}>
-              <td>{rounds[index] - 1}회차</td>
+              <RoundTd>{rounds[index] - 1}회차</RoundTd>
               <td>
                 {numbers.map((number, i) => (
-                  <NumberDiv
-                    key={i}
-                    style={{ backgroundColor: getBackgroundColor(number) }}
-                  >
+                  <NumberDiv bgColor={getBackgroundColor(number)}>
                     {number}
                   </NumberDiv>
                 ))}
@@ -102,7 +99,7 @@ const ReDiv = styled.div`
 
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: beige;
+    background-color: darkgray;
   }
   ::-webkit-scrollbar-button {
     width: 0;
@@ -129,8 +126,10 @@ const Table = styled.table`
 
 const NumberDiv = styled.div`
   display: inline-block;
-  margin: 1rem 0.5rem 0 0.5rem;
+  background-color: ${(props) => props.bgColor};
+  margin-right: 1rem;
   font-size: 1.5rem;
+  line-height: 60px;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -139,45 +138,16 @@ const NumberDiv = styled.div`
   text-shadow: 0px 0px 3px rgba(0, 49, 70, 0.8);
 `;
 
-// const ReUl = styled.ul`
-//   list-style: none;
-//   line-height: 60px;
-//   padding: 0;
-// `;
+const RoundTh = styled.th`
+  width: 15%;
+`;
 
-// const RoundDiv = styled.div`
-//   font-size: 1.5rem;
-//   font-weight: bold;
-//   margin-top: 1rem;
-//   width: 15%;
-//   text-align: center;
-//   border-right: 2px solid white;
-//   color: white;
-// `;
-
-// const NonP = styled.p`
-//   width: 28.5rem;
-
-//   text-align: center;
-//   color: white;
-// `;
-
-// const NumberDiv = styled.div`
-//   display: inline-block;
-//   margin: 1rem 0.5rem 0 0.5rem;
-//   font-size: 1.5rem;
-//   border-radius: 50%;
-//   width: 60px;
-//   height: 60px;
-//   text-align: center;
-//   color: white;
-//   text-shadow: 0px 0px 3px rgba(0, 49, 70, 0.8);
-// `;
-
-// const GradeDiv = styled.span`
-//   width: 20%;
-//   font-size: 1.5rem;
-//   text-align: center;
-//   margin-top: 1rem;
-//   border-left: 2px solid white;
-// `;
+const RoundTd = styled.td`
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  width: 15%;
+  text-align: center;
+  border-right: 2px solid white;
+  color: white;
+`;

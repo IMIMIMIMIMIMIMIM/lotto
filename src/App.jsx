@@ -12,7 +12,6 @@ const App = () => {
   const [chooseList, setChooseList] = useState([]);
   const [numbersList, setNumbersList] = useState([]);
   const [timerFinished, setTimerFinished] = useState(false);
-  const [count, setCount] = useState(0);
 
   const handleRoundChange = (newRound) => {
     setRound((prevRounds) => [newRound, ...prevRounds]);
@@ -28,10 +27,6 @@ const App = () => {
     setTimerFinished(false);
     if (timerFinished && numbers.length === 0) {
     }
-  };
-  const handleChooseNumbers = (choice) => {
-    setChooseList((prevList) => [choice, ...prevList]);
-    console.log([...chooseList, choice]);
   };
 
   return (
@@ -54,12 +49,7 @@ const App = () => {
             onNumbersChange={handleNumbersChange}
           />
         </div>
-        <Input
-          lottoNumbers={lottoNumbers}
-          onChooseNumbers={handleChooseNumbers}
-          timerFinished={timerFinished}
-          round={round}
-        />
+        <Input rounds={round} numbersList={numbersList} />
         <Data lottoNumbers={lottoNumbers} />
       </ConDiv>
       <Result
