@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Number = ({ timerFinished, onNumbersChange }) => {
-  const [lottoNumbers, setLottoNumbers] = useState([]);
-  const [numbersList, setNumbersList] = useState([]);
+  const [lottoNumbers, setLottoNumbers] = useState([]); // 한 회차
+  const [numbersList, setNumbersList] = useState([]); // 전체 회차
   const [currentNumber, setCurrentNumber] = useState(null);
 
   useEffect(() => {

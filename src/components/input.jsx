@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Tooltip as ReactTooltip, Tooltip } from "react-tooltip";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const Input = ({ round, numberList }) => {
+const Input = ({ round, numbersList }) => {
   const [numbers, setNumbers] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [modal, setModal] = useState(false);
+  const [resultList, setResultList] = useState([]);
 
   const handleChange = (e, index) => {
     const { value } = e.target;
@@ -37,13 +38,9 @@ const Input = ({ round, numberList }) => {
     }
   };
 
-  const total = () => {
-    return numbers.reduce((acc, cur) => acc + cur, 0);
-  };
-
+  const total = numbers.reduce((acc, cur) => acc + cur, 0);
   const oddCount = numbers.filter((number) => number % 2 !== 0).length;
   const evenCount = numbers.filter((number) => number % 2 === 0).length;
-
   const highCount = numbers.filter((number) => number >= 23).length;
   const lowCount = numbers.filter((number) => number <= 22).length;
 
@@ -58,8 +55,6 @@ const Input = ({ round, numberList }) => {
     }
 
     const uniqueAcValues = [...new Set(acValues)];
-    console.log(uniqueAcValues);
-
     return uniqueAcValues.length - 5;
   };
 
@@ -68,6 +63,21 @@ const Input = ({ round, numberList }) => {
   const onesDigit = numbers
     .map((number) => number % 10)
     .reduce((acc, cur) => acc + cur, 0);
+
+  const compareNumber = () => {
+    const counts = numbersList.map(
+      (list) => list.filter((number) => numbers.includes(number)).length
+    );
+    const sortedList = counts
+      .map((count, i) => ({ count, i }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5)
+      .map((item) => item.i);
+
+    const top5List = sortedList.map((i) => numbersList[i]);
+    console.log(round, top5List);
+    setResultList(top5List);
+  };
 
   const getBackgroundColor = (number) => {
     if (number <= 10) {
@@ -165,7 +175,14 @@ const Input = ({ round, numberList }) => {
             onChange={(e) => handleChange(e, index)}
           />
         ))}
-        <SaveBtn onClick={handleSave}>확인</SaveBtn>
+        <SaveBtn
+          onClick={() => {
+            handleSave();
+            compareNumber();
+          }}
+        >
+          확인
+        </SaveBtn>
         {modal ? (
           <ModalContainer onClick={closeModal}>
             <Modal onClick={(e) => e.stopPropagation()}>
@@ -193,8 +210,8 @@ const Input = ({ round, numberList }) => {
                           </ReactTooltip>
                         </td>
                         <td>
-                          <TotalSpan color={getTotalColor(total())}>
-                            {total()}
+                          <TotalSpan color={getTotalColor(total)}>
+                            {total}
                           </TotalSpan>
                         </td>
                       </tr>
@@ -259,11 +276,51 @@ const Input = ({ round, numberList }) => {
                   </Table>
                 </DataDiv>
               </LeftDiv>
-              <CompareDiv>야호</CompareDiv>
+              <CompareDiv>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>회차</th>
+                      <th>번호</th>
+                      <th>맞은 개수</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {resultList.map((array, i) => (
+                      <tr key={i}>
+                        <td>회차 {array.i}</td>
+                        <NumTd>
+                          {array.map((number, index) => (
+                            <Num2Div
+                              bgColor={
+                                numbers.includes(number)
+                                  ? getBackgroundColor(number)
+                                  : ""
+                              }
+                              color={
+                                numbers.includes(number) ? "white" : "gray"
+                              }
+                              textShadow={
+                                numbers.includes(number)
+                                  ? "0px 0px 3px rgba(0, 49, 70, 0.8)"
+                                  : ""
+                              }
+                              key={index}
+                            >
+                              {number}
+                            </Num2Div>
+                          ))}
+                        </NumTd>
+                        {/* <td>{sortedList[i].matchedCount}개</td> */}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </CompareDiv>
               <ModalBtn
                 onClick={() => {
                   closeModal();
-                  setNumbers([]); // 확인 버튼을 눌렀을 때 숫자 배열 초기화
+                  setNumbers([]); // 확인 버튼을 눌렀을 때 숫자 초기화
                 }}
               >
                 확인
@@ -397,6 +454,22 @@ const NumDiv = styled.div`
   align-items: center;
   color: white;
   text-shadow: 0px 0px 3px rgba(0, 49, 70, 0.8);
+`;
+const Num2Div = styled.div`
+  background-color: ${(props) => props.bgColor};
+  color: ${(props) => props.color};
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  text-shadow: ${(props) => props.textShadow};
+`;
+
+const NumTd = styled.td`
+  display: flex;
 `;
 
 const DataDiv = styled.div`

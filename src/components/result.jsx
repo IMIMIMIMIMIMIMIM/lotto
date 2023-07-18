@@ -38,21 +38,6 @@ const Result = ({ rounds, numbersList }) => {
   };
   return (
     <ReDiv>
-      {/* <ReUl style={{ listStyle: "none", lineHeight: "60px", padding: "0" }}>
-        {numbersList.map((numbers, index) => (
-          <li style={{ display: "flex" }} key={index}>
-            <RoundDiv>{rounds[index] - 1}회차</RoundDiv>
-            {numbers.map((number, i) => (
-              <NumberDiv
-                key={i}
-                style={{ backgroundColor: getBackgroundColor(number) }}
-              >
-                {number}
-              </NumberDiv>
-            ))}
-          </li>
-        ))}
-      </ReUl> */}
       <Table>
         <thead>
           <tr>
