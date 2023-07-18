@@ -9,7 +9,6 @@ import Data from "./components/data";
 const App = () => {
   const [round, setRound] = useState([1]);
   const [lottoNumbers, setLottoNumbers] = useState([]);
-  const [chooseList, setChooseList] = useState([]);
   const [numbersList, setNumbersList] = useState([]);
   const [timerFinished, setTimerFinished] = useState(false);
 
@@ -55,7 +54,6 @@ const App = () => {
       <Result
         timerFinished={timerFinished}
         rounds={round}
-        chooseList={chooseList}
         numbersList={numbersList}
       />
     </AppDiv>
