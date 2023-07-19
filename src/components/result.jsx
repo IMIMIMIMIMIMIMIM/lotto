@@ -124,14 +124,14 @@ const NumberDiv = styled.div`
 `;
 
 const RoundTh = styled.th`
-  width: 15%;
+  width: 17%;
 `;
 
 const RoundTd = styled.td`
   font-size: 1.5rem;
   font-weight: bold;
   margin-top: 1rem;
-  width: 15%;
+  width: 17%;
   text-align: center;
   border-right: 2px solid white;
   color: white;
