@@ -68,15 +68,14 @@ const Input = ({ round, numbersList }) => {
     const counts = numbersList.map(
       (list) => list.filter((number) => numbers.includes(number)).length
     );
-    const sortedList = counts
-      .map((count, i) => ({ count, i }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5)
-      .map((item) => item.i);
 
-    const top5List = sortedList.map((i) => numbersList[i]);
-    console.log(round, top5List);
-    setResultList(top5List);
+    // counts와 numbersList를 기준으로 결과를 정렬
+    const sortedResult = numbersList
+      .map((list, i) => ({ list, count: counts[i] }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+
+    setResultList(sortedResult);
   };
 
   const getBackgroundColor = (number) => {
@@ -161,7 +160,7 @@ const Input = ({ round, numbersList }) => {
   );
 
   const tooltipStyle = {
-    fontSize: "6px", // 원하는 폰트 크기로 설정
+    fontSize: "6px",
   };
 
   return (
@@ -196,6 +195,12 @@ const Input = ({ round, numbersList }) => {
                 </ChooseDiv>
                 <DataDiv>
                   <Table>
+                    <thead>
+                      <tr>
+                        <th>항목</th>
+                        <th>결과</th>
+                      </tr>
+                    </thead>
                     <tbody>
                       <tr>
                         <td style={{ position: "relative" }}>
@@ -277,7 +282,7 @@ const Input = ({ round, numbersList }) => {
                 </DataDiv>
               </LeftDiv>
               <CompareDiv>
-                <table>
+                <Table>
                   <thead>
                     <tr>
                       <th>회차</th>
@@ -286,36 +291,35 @@ const Input = ({ round, numbersList }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {resultList.map((array, i) => (
+                    {resultList.map((item, i) => (
                       <tr key={i}>
-                        <td>회차 {array.i}</td>
+                        <td>{i} 회차</td>
                         <NumTd>
-                          {array.map((number, index) => (
-                            <Num2Div
-                              bgColor={
-                                numbers.includes(number)
-                                  ? getBackgroundColor(number)
-                                  : ""
-                              }
-                              color={
-                                numbers.includes(number) ? "white" : "gray"
-                              }
-                              textShadow={
-                                numbers.includes(number)
-                                  ? "0px 0px 3px rgba(0, 49, 70, 0.8)"
-                                  : ""
-                              }
+                          {item.list.map((number, index) => (
+                            <Num2span
                               key={index}
+                              style={{
+                                backgroundColor: numbers.includes(number)
+                                  ? getBackgroundColor(number)
+                                  : "",
+                                color: numbers.includes(number)
+                                  ? "white"
+                                  : "gray",
+                                textShadow: numbers.includes(number)
+                                  ? "0px 0px 3px rgba(0, 49, 70, 0.8)"
+                                  : "",
+                                marginRight: "5px",
+                              }}
                             >
                               {number}
-                            </Num2Div>
+                            </Num2span>
                           ))}
                         </NumTd>
-                        {/* <td>{sortedList[i].matchedCount}개</td> */}
+                        <td>{item.count}</td> {/* 맞은 개수 출력 */}
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </Table>
               </CompareDiv>
               <ModalBtn
                 onClick={() => {
@@ -455,7 +459,7 @@ const NumDiv = styled.div`
   color: white;
   text-shadow: 0px 0px 3px rgba(0, 49, 70, 0.8);
 `;
-const Num2Div = styled.div`
+const Num2span = styled.span`
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.color};
   margin-right: 0.5rem;
@@ -470,6 +474,9 @@ const Num2Div = styled.div`
 
 const NumTd = styled.td`
   display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 !important;
 `;
 
 const DataDiv = styled.div`
@@ -485,14 +492,27 @@ const DataDiv = styled.div`
 
 const Table = styled.table`
   width: 100%;
+  height: 100%;
   border-collapse: collapse;
 
-  th,
+  th {
+    text-align: center;
+    :first-child {
+      border-radius: 15px 0 0 0;
+      border-right: 1px solid #ccc;
+    }
+    :last-child {
+      border-left: 1px solid #ccc;
+      border-radius: 0 15px 0 0;
+    }
+  }
   td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: center;
-    border-top: 0;
+    border-bottom: 0;
+    justify-content: center;
+    border-left: none;
     :first-child {
       border-left: 0;
     }
@@ -517,6 +537,7 @@ const CompareDiv = styled.div`
   width: 45%;
   height: 85%;
   display: flex;
+  align-items: center;
 `;
 
 const ModalBtn = styled.button`
