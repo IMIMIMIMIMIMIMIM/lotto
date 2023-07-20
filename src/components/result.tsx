@@ -1,29 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const Result = ({ rounds, numbersList }) => {
-  // const getGrade = (count) => {
-  //   switch (count) {
-  //     case 6:
-  //       return "1등";
-  //     case 5:
-  //       return "2등";
-  //     case 4:
-  //       return "3등";
-  //     case 3:
-  //       return "4등";
-  //     case 2:
-  //       return "5등";
-  //     case 1:
-  //       return "6등";
-  //     case 0:
-  //       return "낙첨";
-  //     case -1:
-  //       return "-";
-  //   }
-  // };
+interface ResultProps {
+  rounds: number[];
+  numbersList: number[][];
+}
 
-  const getBackgroundColor = (number) => {
+const Result = ({ rounds, numbersList }: ResultProps) => {
+  const getBackgroundColor = (number: number) => {
     if (number <= 10) {
       return "#fbc400";
     } else if (number <= 20) {
@@ -36,6 +20,7 @@ const Result = ({ rounds, numbersList }) => {
       return "#b0d840";
     }
   };
+
   return (
     <ReDiv>
       <Table>
@@ -43,18 +28,25 @@ const Result = ({ rounds, numbersList }) => {
           <tr>
             <RoundTh>회차</RoundTh>
             <th>번호</th>
+            <th>보너스</th>
           </tr>
         </thead>
         <tbody>
           {numbersList.map((numbers, index) => (
             <tr key={index}>
               <RoundTd>{rounds[index] - 1}회차</RoundTd>
-              <td>
-                {numbers.map((number, i) => (
+              <td style={{ fontSize: "1.5rem" }}>
+                {numbers.slice(0, 6).map((number, i) => (
                   <NumberDiv bgColor={getBackgroundColor(number)}>
                     {number}
                   </NumberDiv>
                 ))}
+              </td>
+              <td style={{ fontSize: "1.5rem" }}>
+                {/* 보너스 번호 출력 */}
+                <NumberDiv bgColor={getBackgroundColor(numbersList[index][6])}>
+                  {numbersList[index][6]}
+                </NumberDiv>
               </td>
             </tr>
           ))}
@@ -109,10 +101,10 @@ const Table = styled.table`
   }
 `;
 
-const NumberDiv = styled.div`
+const NumberDiv = styled.div<{ bgColor: string }>`
   display: inline-block;
   background-color: ${(props) => props.bgColor};
-  margin-right: 1rem;
+  margin: 0 0.5rem 0 0.5rem;
   font-size: 1.5rem;
   line-height: 60px;
   border-radius: 50%;

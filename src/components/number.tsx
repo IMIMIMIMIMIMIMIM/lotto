@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Number = ({ timerFinished, onNumbersChange }) => {
-  const [lottoNumbers, setLottoNumbers] = useState([]); // 한 회차
-  const [numbersList, setNumbersList] = useState([]); // 전체 회차
-  const [currentNumber, setCurrentNumber] = useState(null);
+interface NumberProps {
+  timerFinished: boolean;
+  onNumbersChange: (numbers: number[]) => void;
+}
+
+const Number = ({ timerFinished, onNumbersChange }: NumberProps) => {
+  const [lottoNumbers, setLottoNumbers] = useState<number[]>([]); // 한 회차
+  const [numbersList, setNumbersList] = useState<number[][]>([]); // 전체 회차
+  const [currentNumber, setCurrentNumber] = useState<number | null>(null);
 
   useEffect(() => {
     if (timerFinished) {
@@ -21,7 +26,7 @@ const Number = ({ timerFinished, onNumbersChange }) => {
         ) {
           clearInterval(interval);
         } else {
-          setCurrentNumber((prevNumber) => prevNumber + 1);
+          setCurrentNumber((prevNumber) => (prevNumber || 0) + 1);
         }
       }, 500);
 
@@ -30,8 +35,8 @@ const Number = ({ timerFinished, onNumbersChange }) => {
   }, [lottoNumbers, currentNumber]); // 0.5초 마다 숫자 하나씩 출력
 
   const generateLottoNumbers = () => {
-    let numberArr = [];
-    let bonusNumber = null;
+    let numberArr: number[] = [];
+    let bonusNumber: number | null = null;
 
     while (numberArr.length < 6) {
       const random = Math.floor(Math.random() * 45) + 1;
@@ -50,14 +55,14 @@ const Number = ({ timerFinished, onNumbersChange }) => {
       }
     } // 보너스 번호 추첨 로직
 
-    const finalLottoNumbers = [...numberArr, bonusNumber]; // 추첨한 로또 번호와 보너스 번호 합침
+    const finalLottoNumbers = [...numberArr, bonusNumber!]; // 추첨한 로또 번호와 보너스 번호 합침
     setLottoNumbers(finalLottoNumbers); // app으로 넘어갈 한 회차의 로또 번호
     setNumbersList((prevList) => [...prevList, finalLottoNumbers]); // result로 넘어갈 전체 회차 목록
     setCurrentNumber(0);
     onNumbersChange(finalLottoNumbers);
   };
 
-  const getBackgroundColor = (number) => {
+  const getBackgroundColor = (number: number) => {
     if (number <= 10) {
       return "#fbc400";
     } else if (number <= 20) {
@@ -77,12 +82,12 @@ const Number = ({ timerFinished, onNumbersChange }) => {
         <NumDiv
           key={i}
           bgColor={getBackgroundColor(number)}
-          show={i <= currentNumber}
+          show={currentNumber !== null && i <= currentNumber}
         >
           {number}
         </NumDiv>
       ))}
-      {currentNumber >= 6 && (
+      {currentNumber !== null && currentNumber >= 6 && (
         <>
           <PlusDiv>+</PlusDiv>
           <NumDiv
@@ -111,7 +116,7 @@ const LoDiv = styled.div`
   box-shadow: 0px 0px 10px 1px;
 `;
 
-const NumDiv = styled.div`
+const NumDiv = styled.div<{ bgColor: string; show: boolean }>`
   font-size: 1.5rem;
   background-color: ${(props) => props.bgColor};
   border-radius: 50%;

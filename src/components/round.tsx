@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Round = ({ onRoundChange, onTimerFinish }) => {
-  const [round, setRound] = useState(1);
-  const [min, setMin] = useState(0);
-  const [sec, setSec] = useState(3);
+interface RoundProps {
+  onRoundChange: (newRound: number) => void;
+  onTimerFinish: () => void;
+}
+
+const Round = ({ onRoundChange, onTimerFinish }: RoundProps) => {
+  const [round, setRound] = useState<number>(1);
+  const [min, setMin] = useState<number>(0);
+  const [sec, setSec] = useState<number>(3);
 
   useEffect(() => {
     const countdown = setInterval(() => {
-      if (parseInt(sec) === 0 && parseInt(min) === 0) {
+      if (parseInt(sec.toString()) === 0 && parseInt(min.toString()) === 0) {
         onTimerFinish();
         clearInterval(countdown);
         setRound((prevRound) => prevRound + 1);
         onRoundChange(round + 1);
         setSec(3);
-      } else if (parseInt(sec) > 0) {
+      } else if (parseInt(sec.toString()) > 0) {
         setSec((prevSec) => prevSec - 1);
-      } else if (parseInt(sec) === 0) {
+      } else if (parseInt(sec.toString()) === 0) {
         setMin((prevMin) => prevMin - 1);
         setSec(59);
       }
     }, 1000);
     return () => clearInterval(countdown);
-  }, [min, sec, onTimerFinish]); // 타이머 작동 로직
+  }, [min, sec, onTimerFinish, round, onRoundChange]); // 타이머 작동 로직
 
   return (
     <div>

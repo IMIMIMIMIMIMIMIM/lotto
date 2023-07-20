@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const Data = ({ lottoNumbers }) => {
-  const [numberCountMap, setNumberCountMap] = useState({});
+interface DataProps {
+  lottoNumbers: number[];
+}
+
+const Data = ({ lottoNumbers }: DataProps) => {
+  const [numberCountMap, setNumberCountMap] = useState<{
+    [key: number]: number;
+  }>({});
   const allNumbers = Array.from({ length: 45 }, (_, index) => index + 1);
 
   useEffect(() => {
     // 각 숫자의 출현 횟수를 세는 로직
-    const updatedCountMap = { ...numberCountMap };
+    const updatedCountMap: { [key: number]: number } = { ...numberCountMap };
     lottoNumbers.forEach((number) => {
       if (updatedCountMap[number]) {
         updatedCountMap[number]++;
@@ -25,14 +31,14 @@ const Data = ({ lottoNumbers }) => {
     setNumberCountMap(updatedCountMap);
   }, [lottoNumbers]);
 
-  const sortedNumbers = Object.keys(numberCountMap).sort(
-    (a, b) => numberCountMap[b] - numberCountMap[a]
-  );
+  const sortedNumbers: number[] = Object.keys(numberCountMap)
+    .map(Number)
+    .sort((a, b) => numberCountMap[b] - numberCountMap[a]);
 
   const topFiveNumbers = sortedNumbers.slice(0, 5);
   const bottomFiveNumbers = sortedNumbers.slice(-5).reverse();
 
-  const getBackgroundColor = (number) => {
+  const getBackgroundColor = (number: number) => {
     if (number <= 10) {
       return "#fbc400";
     } else if (number <= 20) {
@@ -55,11 +61,11 @@ const Data = ({ lottoNumbers }) => {
             <NumberItem key={index}>
               <RankDiv>{index + 1}.</RankDiv>
               <NumberDiv
-                style={{ backgroundColor: getBackgroundColor(number) }}
+                style={{ backgroundColor: getBackgroundColor(Number(number)) }}
               >
                 {number}
               </NumberDiv>
-              <CountDiv>{numberCountMap[number]}번</CountDiv>
+              <CountDiv>{numberCountMap[Number(number)]}번</CountDiv>
             </NumberItem>
           ))}
         </NumbersContainer>
@@ -71,11 +77,11 @@ const Data = ({ lottoNumbers }) => {
             <NumberItem key={index}>
               <RankDiv>{index + 1}.</RankDiv>
               <NumberDiv
-                style={{ backgroundColor: getBackgroundColor(number) }}
+                style={{ backgroundColor: getBackgroundColor(Number(number)) }}
               >
                 {number}
               </NumberDiv>
-              <CountDiv>{numberCountMap[number]}번</CountDiv>
+              <CountDiv>{numberCountMap[Number(number)]}번</CountDiv>
             </NumberItem>
           ))}
         </NumbersContainer>
