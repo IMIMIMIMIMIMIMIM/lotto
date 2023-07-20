@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Round from "./components/round";
 import Number from "./components/number";
@@ -6,13 +6,15 @@ import Input from "./components/input";
 import Result from "./components/result";
 import Data from "./components/data";
 
-const App = () => {
-  const [round, setRound] = useState([1]);
-  const [lottoNumbers, setLottoNumbers] = useState([]);
-  const [numbersList, setNumbersList] = useState([]);
-  const [timerFinished, setTimerFinished] = useState(false);
+interface AppProps {}
 
-  const handleRoundChange = (newRound) => {
+const App = (props: AppProps) => {
+  const [round, setRound] = useState<number[]>([1]);
+  const [lottoNumbers, setLottoNumbers] = useState<number[]>([]);
+  const [numbersList, setNumbersList] = useState<number[][]>([]);
+  const [timerFinished, setTimerFinished] = useState<boolean>(false);
+
+  const handleRoundChange = (newRound: number) => {
     setRound((prevRounds) => [newRound, ...prevRounds]);
   };
 
@@ -20,7 +22,7 @@ const App = () => {
     setTimerFinished(true);
   };
 
-  const handleNumbersChange = (numbers) => {
+  const handleNumbersChange = (numbers: number[]) => {
     setLottoNumbers(numbers);
     setNumbersList((prevList) => [numbers, ...prevList]);
     setTimerFinished(false);
@@ -48,14 +50,10 @@ const App = () => {
             onNumbersChange={handleNumbersChange}
           />
         </div>
-        <Input rounds={round} numbersList={numbersList} />
+        <Input numbersList={numbersList} />
         <Data lottoNumbers={lottoNumbers} />
       </ConDiv>
-      <Result
-        timerFinished={timerFinished}
-        rounds={round}
-        numbersList={numbersList}
-      />
+      <Result rounds={round} numbersList={numbersList} />
     </AppDiv>
   );
 };

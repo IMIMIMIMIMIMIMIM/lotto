@@ -2,13 +2,22 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
-const Input = ({ round, numbersList }) => {
-  const [numbers, setNumbers] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [modal, setModal] = useState(false);
-  const [resultList, setResultList] = useState([]);
+interface InputProps {
+  numbersList: number[][];
+}
 
-  const handleChange = (e, index) => {
+const Input = ({ numbersList }: InputProps) => {
+  const [numbers, setNumbers] = useState<number[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [modal, setModal] = useState<boolean>(false);
+  const [resultList, setResultList] = useState<
+    { list: number[]; count: number }[]
+  >([]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const { value } = e.target;
     const updatedNumbers = [...numbers];
     updatedNumbers[index] = parseInt(value);
@@ -45,7 +54,7 @@ const Input = ({ round, numbersList }) => {
   const lowCount = numbers.filter((number) => number <= 22).length;
 
   const calculateACValue = () => {
-    const acValues = [];
+    const acValues: number[] = [];
 
     for (let i = 0; i < numbers.length; i++) {
       for (let j = i + 1; j < numbers.length; j++) {
@@ -78,7 +87,7 @@ const Input = ({ round, numbersList }) => {
     setResultList(sortedResult);
   };
 
-  const getBackgroundColor = (number) => {
+  const getBackgroundColor = (number: number) => {
     if (number <= 10) {
       return "#fbc400";
     } else if (number <= 20) {
@@ -92,7 +101,7 @@ const Input = ({ round, numbersList }) => {
     }
   };
 
-  const getTotalColor = (total) => {
+  const getTotalColor = (total: number) => {
     if (total >= 100 && total <= 175) {
       return "#b0d840";
     } else if (total >= 60 && total <= 215) {
@@ -188,7 +197,7 @@ const Input = ({ round, numbersList }) => {
               <LeftDiv>
                 <ChooseDiv>
                   {numbers.slice(0, 6).map((number, i) => (
-                    <NumDiv bgColor={getBackgroundColor(number)}>
+                    <NumDiv bgColor={getBackgroundColor(number)} key={i}>
                       {number}
                     </NumDiv>
                   ))}
@@ -296,23 +305,20 @@ const Input = ({ round, numbersList }) => {
                         <td>{i} 회차</td>
                         <NumTd>
                           {item.list.map((number, index) => (
-                            <Num2span
-                              key={index}
-                              style={{
-                                backgroundColor: numbers.includes(number)
+                            <Num2Div
+                              bgColor={
+                                numbers.includes(number)
                                   ? getBackgroundColor(number)
-                                  : "",
-                                color: numbers.includes(number)
-                                  ? "white"
-                                  : "gray",
-                                textShadow: numbers.includes(number)
+                                  : "none"
+                              }
+                              textShadow={
+                                numbers.includes(number)
                                   ? "0px 0px 3px rgba(0, 49, 70, 0.8)"
-                                  : "",
-                                marginRight: "5px",
-                              }}
+                                  : ""
+                              }
                             >
                               {number}
-                            </Num2span>
+                            </Num2Div>
                           ))}
                         </NumTd>
                         <td>{item.count}</td> {/* 맞은 개수 출력 */}
@@ -447,7 +453,7 @@ const ChooseDiv = styled.div`
   align-items: center;
 `;
 
-const NumDiv = styled.div`
+const NumDiv = styled.div<{ bgColor: string }>`
   font-size: 1.5rem;
   background-color: ${(props) => props.bgColor};
   border-radius: 50%;
@@ -459,16 +465,20 @@ const NumDiv = styled.div`
   color: white;
   text-shadow: 0px 0px 3px rgba(0, 49, 70, 0.8);
 `;
-const Num2span = styled.span`
+const Num2Div = styled.div<{
+  bgColor: string;
+  textShadow: string;
+}>`
   background-color: ${(props) => props.bgColor};
-  color: ${(props) => props.color};
+  color: ${(props) => (props.bgColor === "none" ? "gray" : "white")};
   margin-right: 0.5rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
+  margin-right: 5px;
   text-shadow: ${(props) => props.textShadow};
 `;
 
