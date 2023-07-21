@@ -95,7 +95,6 @@ export default Data;
 const Container = styled.div`
   margin: 1rem;
   display: flex;
-  /* justify-content: space-around; */
 `;
 
 const Title = styled.div`

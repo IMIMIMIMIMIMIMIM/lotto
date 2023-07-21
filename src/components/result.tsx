@@ -1,12 +1,9 @@
-import React from "react";
 import styled from "styled-components";
 
 interface ResultProps {
-  rounds: number[];
-  numbersList: number[][];
+  lottoResults: { round: number; numbers: number[] }[];
 }
-
-const Result = ({ rounds, numbersList }: ResultProps) => {
+const Result = ({ lottoResults }: ResultProps) => {
   const getBackgroundColor = (number: number) => {
     if (number <= 10) {
       return "#fbc400";
@@ -32,20 +29,19 @@ const Result = ({ rounds, numbersList }: ResultProps) => {
           </tr>
         </thead>
         <tbody>
-          {numbersList.map((numbers, index) => (
+          {lottoResults.map(({ round, numbers }, index) => (
             <tr key={index}>
-              <RoundTd>{rounds[index] - 1}회차</RoundTd>
+              <RoundTd>{round}회차</RoundTd>
               <td style={{ fontSize: "1.5rem" }}>
                 {numbers.slice(0, 6).map((number, i) => (
-                  <NumberDiv bgColor={getBackgroundColor(number)}>
+                  <NumberDiv bgColor={getBackgroundColor(number)} key={i}>
                     {number}
                   </NumberDiv>
                 ))}
               </td>
               <td style={{ fontSize: "1.5rem" }}>
-                {/* 보너스 번호 출력 */}
-                <NumberDiv bgColor={getBackgroundColor(numbersList[index][6])}>
-                  {numbersList[index][6]}
+                <NumberDiv bgColor={getBackgroundColor(numbers[6])}>
+                  {numbers[6]}
                 </NumberDiv>
               </td>
             </tr>
