@@ -355,7 +355,7 @@ const Input = ({ lottoResults }: InputProps) => {
 export default Input;
 
 const ConDiv = styled.div`
-  height: 300px;
+  height: 200px;
   margin-top: 1rem;
   margin-left: 1rem;
   margin-right: 1rem;
