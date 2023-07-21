@@ -3,15 +3,15 @@ import styled from "styled-components";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
 interface InputProps {
-  numbersList: number[][];
+  lottoResults: { round: number; numbers: number[] }[];
 }
 
-const Input = ({ numbersList }: InputProps) => {
+const Input = ({ lottoResults }: InputProps) => {
   const [numbers, setNumbers] = useState<number[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [modal, setModal] = useState<boolean>(false);
   const [resultList, setResultList] = useState<
-    { list: number[]; count: number }[]
+    { round: number; list: number[]; count: number }[]
   >([]);
 
   const handleChange = (
@@ -74,17 +74,25 @@ const Input = ({ numbersList }: InputProps) => {
     .reduce((acc, cur) => acc + cur, 0);
 
   const compareNumber = () => {
-    const counts = numbersList.map(
-      (list) => list.filter((number) => numbers.includes(number)).length
+    const realNumbersList = lottoResults.map((result) =>
+      result.numbers.slice(0, -1)
     );
+    const counts = realNumbersList.map(
+      (list) => list.filter((number) => numbers.includes(number)).length
+    ); // 보너스 번호를 뺀 후 비교
 
     // counts와 numbersList를 기준으로 결과를 정렬
-    const sortedResult = numbersList
-      .map((list, i) => ({ list, count: counts[i] }))
+    const sortedResult = realNumbersList
+      .map((list, i) => ({
+        round: lottoResults[i].round,
+        list,
+        count: counts[i],
+      }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 5);
 
     setResultList(sortedResult);
+    console.log(resultList);
   };
 
   const getBackgroundColor = (number: number) => {
@@ -169,7 +177,7 @@ const Input = ({ numbersList }: InputProps) => {
   );
 
   const tooltipStyle = {
-    fontSize: "6px",
+    fontSize: "12px",
   };
 
   return (
@@ -302,7 +310,7 @@ const Input = ({ numbersList }: InputProps) => {
                   <tbody>
                     {resultList.map((item, i) => (
                       <tr key={i}>
-                        <td>{i} 회차</td>
+                        <td>{item.round} 회차</td>
                         <NumTd>
                           {item.list.map((number, index) => (
                             <Num2Div

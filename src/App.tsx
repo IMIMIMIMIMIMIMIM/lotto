@@ -9,7 +9,7 @@ import Data from "./components/data";
 interface AppProps {}
 
 const App = (props: AppProps) => {
-  const [round, setRound] = useState<number[]>([1]);
+  const [round, setRound] = useState<number[]>([0]);
   const [lottoNumbers, setLottoNumbers] = useState<number[]>([]);
   const [numbersList, setNumbersList] = useState<number[][]>([]);
   const [timerFinished, setTimerFinished] = useState<boolean>(false);
@@ -29,6 +29,11 @@ const App = (props: AppProps) => {
     if (timerFinished && numbers.length === 0) {
     }
   };
+  const lottoResults = numbersList.map((numbers, index) => ({
+    round: round[index] - 1,
+    numbers: numbers,
+  }));
+  // console.log(lottoResults);
 
   return (
     <AppDiv>
@@ -50,10 +55,10 @@ const App = (props: AppProps) => {
             onNumbersChange={handleNumbersChange}
           />
         </div>
-        <Input numbersList={numbersList} />
+        <Input lottoResults={lottoResults} />
         <Data lottoNumbers={lottoNumbers} />
       </ConDiv>
-      <Result rounds={round} numbersList={numbersList} />
+      <Result lottoResults={lottoResults} />
     </AppDiv>
   );
 };

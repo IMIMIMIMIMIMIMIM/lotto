@@ -52,8 +52,6 @@ const NDiv = styled.div`
   color: white;
   background-color: #333333;
   padding: 1rem;
-  /* border: 2px solid #black;
-  border-right: 0px solid white; */
 `;
 
 const TimeDiv = styled.div`
@@ -64,5 +62,4 @@ const TimeDiv = styled.div`
   color: white;
   background-color: #333333;
   border-radius: 0 5px 5px 0;
-  /* border: 2px solid black; */
 `;
