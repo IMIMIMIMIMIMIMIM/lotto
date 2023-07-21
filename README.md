@@ -14,3 +14,24 @@
 <div align="center">
 <a href="https://www.notion.so/Lotto-af0bce09d3f3437d8c7c9ab65a4c0633"><img src="https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white&link=https://balanced-desk-3a4.notion.site/EYAGI-06e6113484324fe8ba37ec83e5e70b8d/"/>
  </div>
+ 
+ # 설명
+ 로또 번호 분석 및 모의 추첨 사이트입니다.<br/>
+ 각 라운드마다 새로운 로또 번호를 추첨하고<br/>
+ 내가 생각하는 로또 번호를 분석하고 비교해볼 수 있습니다.
+ 
+ # 개발 기간
+ * 23.06.08 ~ 23.07.21
+ 
+# 기술스택
+<br/>
+<p align="center">
+<img src="https://shields.io/badge/JavaScript-F7DF1E?logo=JavaScript&logoColor=000&style=flat-square"/> 
+ <img src="https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square"/> 
+ <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=&logo=Visual Studio Code&logoColor=white"/>
+<br/>
+<img src="https://img.shields.io/badge/React-61DAFB?style=&logo=React&logoColor=white"/>
+<img src="https://img.shields.io/badge/CSS-1572B6?style=&logo=CSS3&logoColor=white"/>
+<img src="https://img.shields.io/badge/styled-components-DB7093?style=&logo=styled-components&logoColor=white"/>
+ <img src="https://img.shields.io/badge/GitHub-181717?style=&logo=GitHub&logoColor=white"/> 
+</p>
