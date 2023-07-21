@@ -110,7 +110,7 @@ const LoDiv = styled.div`
   margin-right: 1rem;
   justify-content: space-around;
   align-items: center;
-  height: 200px;
+  height: 300px;
   background-color: #dfdf9c;
   border-radius: 15px;
   box-shadow: 0px 0px 10px 1px;
@@ -120,8 +120,8 @@ const NumDiv = styled.div<{ bgColor: string; show: boolean }>`
   font-size: 1.5rem;
   background-color: ${(props) => props.bgColor};
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
