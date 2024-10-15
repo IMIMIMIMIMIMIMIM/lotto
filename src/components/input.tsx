@@ -397,8 +397,10 @@ const ErrorMessage = styled.p`
 
 const InDiv = styled.div`
   margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-around;
+  align-items: center;
 `;
 
 const NumberInput = styled.input`
