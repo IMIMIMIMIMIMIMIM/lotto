@@ -188,7 +188,7 @@ const Input = ({ lottoResults }: InputProps) => {
             key={index}
             type="number"
             value={numbers[index] || ""}
-            onChange={(e) => handleChange(e, index)}
+            onChange={(e: any) => handleChange(e, index)}
           />
         ))}
         <SaveBtn
@@ -201,7 +201,7 @@ const Input = ({ lottoResults }: InputProps) => {
         </SaveBtn>
         {modal ? (
           <ModalContainer onClick={closeModal}>
-            <Modal onClick={(e) => e.stopPropagation()}>
+            <Modal onClick={(e: any) => e.stopPropagation()}>
               <LeftDiv>
                 <ChooseDiv>
                   {numbers.slice(0, 6).map((number, i) => (
